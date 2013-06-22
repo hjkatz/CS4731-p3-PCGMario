@@ -42,12 +42,12 @@ public class LevelSceneTest extends LevelScene{
       if(level == null) if(isCustom){
          MyLevelGenerator clg = new MyLevelGenerator();
          GamePlay gp = new GamePlay();
-         gp = gp.read("player.txt");
+         gp = gp.read("MarioLevelComp2011_cs4731/player.txt");
          currentLevel = (Level) clg.generateLevel(gp);
 
          // You can use the following commands if you want to benefit from
          // the interface containing detailed information
-         String detailedInfo = FileHandler.readFile("DetailedInfo.txt");
+         String detailedInfo = FileHandler.readFile("MarioLevelComp2011_cs4731//DetailedInfo.txt");
 
       }
       else currentLevel = new RandomLevel(320, 15, levelSeed, levelDifficulty, levelType);
