@@ -11,6 +11,11 @@ public class Transition extends Segment{
             level.setBlock(x, y, HarrisonLevel.ROCK);
          }
       }
+
+      for(int x = start + 1; x < getLength() + start - 1; x++){
+         level.setBlock(x, level.getHeight() - 2, HarrisonLevel.COIN);
+      }
+
       return getLength();
    }
 
