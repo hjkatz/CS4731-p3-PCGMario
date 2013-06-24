@@ -4,7 +4,7 @@ package dk.itu.mario.level.harrison;
 import dk.itu.mario.level.Level;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */
-public class Transition extends Segment
+public class GapSmall extends Segment
 {
     
     @Override
@@ -12,15 +12,14 @@ public class Transition extends Segment
     {
         for ( int x = start; x < getLength() + start; x++ )
         {
-            for ( int y = level.getHeight(); y > level.getHeight() - 2; y-- )
+            if ( x <= ( start + getLength() / 2 - 2 ) || x >= ( start + getLength() / 2 + 2 ) )
             {
-                level.setBlock( x, y, HarrisonLevel.ROCK );
+                level.setBlock( x, level.getHeight() - 1, HarrisonLevel.ROCK );
             }
-        }
-        
-        for ( int x = start + ( getLength() / 3 ); x < getLength() + start - ( getLength() / 3 ); x++ )
-        {
-            level.setBlock( x, level.getHeight() - 2, HarrisonLevel.COIN );
+            else
+            {
+                level.setBlock( x, level.getHeight() - 5, HarrisonLevel.COIN );
+            }
         }
         
         return getLength();
