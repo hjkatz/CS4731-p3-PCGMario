@@ -51,7 +51,7 @@ public class WallJumpUp extends Segment
     @Override
     public int getDifficulty()
     {
-        return 9;
+        return 8;
     }
     
     @Override

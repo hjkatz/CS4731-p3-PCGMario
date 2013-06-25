@@ -95,7 +95,8 @@ public class LevelSceneTest extends LevelScene{
 
       double startX = 32; // mario start position
       double endX = level.getxExit() * squareSize; // position of the end on the level
-      if(!isCustom && recorder == null) recorder = new DataRecorder(this, (RandomLevel) level, keys);
+      // removed check for !isCustom
+      if(recorder == null) recorder = new DataRecorder(this, (RandomLevel) level, keys);
 
       gameStarted = false;
    }

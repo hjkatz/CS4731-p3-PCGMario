@@ -2,17 +2,13 @@
 package dk.itu.mario.level.harrison;
 
 import dk.itu.mario.MarioInterface.GamePlay;
-import dk.itu.mario.level.Level;
+import dk.itu.mario.level.RandomLevel;
 
 import java.util.Random;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */
-public class HarrisonLevel extends Level
+public class HarrisonLevel extends RandomLevel
 {
-    // you sure these are correct? a lot of them are the same numbers, also since they are bytes in can only go from
-    // -128 to 127 but 17 * 16 is 272 so thats no good, didnt want to change anything cause i could be missing something?
-    // and i realize this is from MyLevel, but lets take hints from our last project lessons learned and not use their stuff in any way
-    // - tj
     public static final byte BLOCK_EMPTY         = ( byte ) ( 0 + 1 * 16 );    // 1 * 16
     public static final byte BLOCK_POWERUP       = ( byte ) ( 4 + 2 + 1 * 16 ); // 7 * 16
     public static final byte BLOCK_COIN          = ( byte ) ( 4 + 1 + 1 * 16 ); // 6 * 16
@@ -44,10 +40,10 @@ public class HarrisonLevel extends Level
     
     public HarrisonLevel( long seed, GamePlay playerMetrics )
     {
-        super( 320, 15 );
+        super( 600, 15 );
         this.seed = seed;
         this.playerMetrics = playerMetrics;
-        width = 320;
+        width = 600;
         height = 15;
         create();
     }
@@ -65,7 +61,11 @@ public class HarrisonLevel extends Level
         Segment gapMedium = new GapMedium();
         Segment gapLarge = new GapLarge();
         Segment gapExtraLarge = new GapExtraLarge();
-
+        Segment jumpMedium = new JumpMedium();
+        Segment jumpLarge = new JumpLarge();
+        Segment pillars = new Pillars();
+        Segment pillarsGap = new PillarsGap();
+        
         // create the start location
         int length = 0;
         length += transition.attach( length, this );
@@ -74,29 +74,38 @@ public class HarrisonLevel extends Level
         while ( length < width - 20 )
         {
             length += transition.attach( length, this );
-//            length += ceilingJumpUp.attach( length, this );
+            length += ceilingJumpUp.attach( length, this );
+            length += transition.attach( length, this );
             length += ceilingJumpUpDown.attach( length, this );
-//            length += wallJumpUp.attach( length, this );
-//            length += wallJumpUpDown.attach( length, this );
-//            length += gapSmall.attach( length, this );
-//            length += gapMedium.attach( length, this );
-//            length += gapLarge.attach( length, this );
-//            length += gapExtraLarge.attach( length, this );
+            length += transition.attach( length, this );
+            length += wallJumpUp.attach( length, this );
+            length += transition.attach( length, this );
+            length += wallJumpUpDown.attach( length, this );
+            length += transition.attach( length, this );
+            length += gapSmall.attach( length, this );
+            length += transition.attach( length, this );
+            length += gapMedium.attach( length, this );
+            length += transition.attach( length, this );
+            length += gapLarge.attach( length, this );
+            length += transition.attach( length, this );
+            length += gapExtraLarge.attach( length, this );
+            length += transition.attach( length, this );
+            length += jumpMedium.attach( length, this );
+            length += transition.attach( length, this );
+            length += jumpLarge.attach( length, this );
+            length += transition.attach( length, this );
+            length += pillars.attach( length, this );
+            length += transition.attach( length, this );
+            length += pillarsGap.attach( length, this );
         }
-
+        
         xExit = width - 8;
         yExit = height - 1;
-
+        
         while ( length < width )
         {
             length += transition.attach( length, this );
         }
-
-    }
-    
-    @Override
-    public Level clone() throws CloneNotSupportedException
-    {
-        return super.clone();
+        
     }
 }
