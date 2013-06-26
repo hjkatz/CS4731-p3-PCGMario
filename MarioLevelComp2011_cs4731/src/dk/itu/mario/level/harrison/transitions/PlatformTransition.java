@@ -13,6 +13,8 @@ public class PlatformTransition extends Segment{
          level.setBlock(start, y, HarrisonLevel.ROCK);
          level.setBlock(start + 1, y, HarrisonLevel.ROCK);
          level.setBlock(start + 2, y, HarrisonLevel.ROCK);
+         level.setBlock(start + 6, y, HarrisonLevel.ROCK);
+         level.setBlock(start + 7, y, HarrisonLevel.ROCK);
          level.setBlock(start + 8, y, HarrisonLevel.ROCK);
          level.setBlock(start + 9, y, HarrisonLevel.ROCK);
          level.setBlock(start + 10, y, HarrisonLevel.ROCK);
@@ -25,6 +27,7 @@ public class PlatformTransition extends Segment{
       level.setBlock(start + 7, level.getHeight() - 5, HarrisonLevel.BLOCK_EMPTY);
 
       level.setBlock(start + 6, level.getHeight() - 6, HarrisonLevel.COIN);
+      level.setBlock(start + 7, level.getHeight() - 2, HarrisonLevel.COIN);
 
       return getLength();
    }

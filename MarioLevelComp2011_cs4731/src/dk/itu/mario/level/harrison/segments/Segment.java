@@ -1,5 +1,6 @@
 package dk.itu.mario.level.harrison.segments;
 
+import dk.itu.mario.engine.sprites.SpriteTemplate;
 import dk.itu.mario.level.Level;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */

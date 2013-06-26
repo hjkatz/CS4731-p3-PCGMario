@@ -31,7 +31,7 @@ public class RunnableGapLong extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 2;
+      return 4;
    }
 
    @Override public int getLength(){

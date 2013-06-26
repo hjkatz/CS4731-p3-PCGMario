@@ -1,6 +1,7 @@
 package dk.itu.mario.level.harrison;
 
 import dk.itu.mario.MarioInterface.GamePlay;
+import dk.itu.mario.engine.sprites.SpriteTemplate;
 import dk.itu.mario.level.RandomLevel;
 import dk.itu.mario.level.harrison.segments.*;
 import dk.itu.mario.level.harrison.transitions.*;
@@ -34,6 +35,7 @@ public class HarrisonLevel extends RandomLevel{
    public static final byte TUBE_TOP_RIGHT      = (byte) (11 + 0 * 16);   // 11 * 16
    public static final byte TUBE_SIDE_LEFT      = (byte) (10 + 1 * 16);   // 11 * 16
    public static final byte TUBE_SIDE_RIGHT     = (byte) (11 + 1 * 16);   // 12 * 16
+   public static final int  LEVEL_WIDTH         = 400;
    private final int        NUM_COINS           = 230;
    private final int        NUM_JUMPS           = 21;
    private final int        NUM_GAPS            = 10;
@@ -52,9 +54,11 @@ public class HarrisonLevel extends RandomLevel{
    private int              typeTransition      = 0;
    private int              typeEnemy           = 0;
    private int              length              = 0;
+   //the enemies
+   public static SpriteTemplate[][] spriteTemplates;
 
    public HarrisonLevel(long seed, GamePlay playerMetrics, int difficulty){
-      super(600, 15);
+      super(HarrisonLevel.LEVEL_WIDTH, 15);
       if(difficulty >= 1 && difficulty <= 10){
          difficultyEnemy = difficulty;
          difficultyTime = difficulty;
@@ -66,8 +70,9 @@ public class HarrisonLevel extends RandomLevel{
       }
       this.seed = seed;
       this.playerMetrics = playerMetrics;
-      width = 600;
+      width = HarrisonLevel.LEVEL_WIDTH;
       height = 15;
+      spriteTemplates = new SpriteTemplate[width][height];
       create();
    }
 
@@ -95,13 +100,14 @@ public class HarrisonLevel extends RandomLevel{
       Segment runnableGapLong = new RunnableGapLong();
       Segment pipeSingle = new PipeSingle();
       Segment pipeDouble = new PipeDouble();
+      Segment enemyBumpUp = new EnemyBumpUp();
 
       ArrayList<Segment> segments = new ArrayList<Segment>();
-      // segments.add(singletonTransition);
-      // segments.add(shortTransition);
-      // segments.add(mediumTransition);
+      //segments.add(singletonTransition);
+      segments.add(shortTransition);
+      segments.add(mediumTransition);
       segments.add(longTransition);
-      // segments.add(platformTransition);
+      segments.add(platformTransition);
       segments.add(ceilingJumpUp);
       segments.add(ceilingJumpUpDown);
       segments.add(wallJumpUp);
@@ -118,8 +124,13 @@ public class HarrisonLevel extends RandomLevel{
       segments.add(runnableGapLong);
       segments.add(pipeSingle);
       segments.add(pipeDouble);
+      segments.add(enemyBumpUp);
 
-      boolean transition = true;
+      boolean transition = false;
+
+      //create the start
+      addSegment(longTransition);
+      addSegment(enemyBumpUp);
 
       // create all of the medium sections
       while(length < width - 20){
@@ -208,7 +219,7 @@ public class HarrisonLevel extends RandomLevel{
 
       xExit = width - 8;
       yExit = height - 1;
-
+      //create exit?
       while(length < width){
          length += longTransition.attach(length, this);
       }
