@@ -1,9 +1,10 @@
-package dk.itu.mario.level.harrison;
+package dk.itu.mario.level.harrison.segments;
 
 import dk.itu.mario.level.Level;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */
 public abstract class Segment{
+
 
    public abstract int attach(int start, Level level);
 

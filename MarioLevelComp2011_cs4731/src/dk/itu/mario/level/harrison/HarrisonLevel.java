@@ -3,6 +3,8 @@ package dk.itu.mario.level.harrison;
 
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.level.RandomLevel;
+import dk.itu.mario.level.harrison.segments.*;
+import dk.itu.mario.level.harrison.transitions.*;
 
 import java.util.Random;
 
@@ -51,8 +53,12 @@ public class HarrisonLevel extends RandomLevel
     public void create()
     {
         random = new Random( seed );
-        
-        Segment transition = new Transition();
+
+        Segment singletonTransition = new SingletonTransition();
+        Segment shortTransition = new ShortTransition();
+        Segment mediumTransition = new MediumTransition();
+        Segment longTransition = new LongTransition();
+        Segment platformTransition = new PlatformTransition();
         Segment ceilingJumpUp = new CeilingJumpUp();
         Segment ceilingJumpUpDown = new CeilingJumpUpDown();
         Segment wallJumpUp = new WallJumpUp();
@@ -68,34 +74,34 @@ public class HarrisonLevel extends RandomLevel
         
         // create the start location
         int length = 0;
-        length += transition.attach( length, this );
+        length += longTransition.attach( length, this );
         
         // create all of the medium sections
         while ( length < width - 20 )
         {
-            length += transition.attach( length, this );
+            length += shortTransition.attach( length, this );
             length += ceilingJumpUp.attach( length, this );
-            length += transition.attach( length, this );
+            length += mediumTransition.attach( length, this );
             length += ceilingJumpUpDown.attach( length, this );
-            length += transition.attach( length, this );
+            length += singletonTransition.attach( length, this );
             length += wallJumpUp.attach( length, this );
-            length += transition.attach( length, this );
+            length += platformTransition.attach( length, this );
             length += wallJumpUpDown.attach( length, this );
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
             length += gapSmall.attach( length, this );
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
             length += gapMedium.attach( length, this );
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
             length += gapLarge.attach( length, this );
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
             length += gapExtraLarge.attach( length, this );
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
             length += jumpMedium.attach( length, this );
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
             length += jumpLarge.attach( length, this );
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
             length += pillars.attach( length, this );
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
             length += pillarsGap.attach( length, this );
         }
         
@@ -104,7 +110,7 @@ public class HarrisonLevel extends RandomLevel
         
         while ( length < width )
         {
-            length += transition.attach( length, this );
+            length += longTransition.attach( length, this );
         }
         
     }

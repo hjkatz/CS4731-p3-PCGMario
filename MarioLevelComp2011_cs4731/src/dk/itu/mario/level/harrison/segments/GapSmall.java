@@ -1,10 +1,11 @@
 
-package dk.itu.mario.level.harrison;
+package dk.itu.mario.level.harrison.segments;
 
 import dk.itu.mario.level.Level;
+import dk.itu.mario.level.harrison.HarrisonLevel;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */
-public class GapLarge extends Segment
+public class GapSmall extends Segment
 {
     
     @Override
@@ -12,7 +13,7 @@ public class GapLarge extends Segment
     {
         for ( int x = start; x < getLength() + start; x++ )
         {
-            if ( x <= ( start + getLength() / 2 - 4 ) || x >= ( start + getLength() / 2 + 4 ) )
+            if ( x <= ( start + getLength() / 2 - 2 ) || x >= ( start + getLength() / 2 + 2 ) )
             {
                 level.setBlock( x, level.getHeight() - 1, HarrisonLevel.ROCK );
             }
@@ -28,7 +29,7 @@ public class GapLarge extends Segment
     @Override
     public int getDifficulty()
     {
-        return 3;
+        return 1;
     }
     
     @Override

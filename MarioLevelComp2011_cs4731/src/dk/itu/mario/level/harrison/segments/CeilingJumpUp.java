@@ -1,7 +1,8 @@
 
-package dk.itu.mario.level.harrison;
+package dk.itu.mario.level.harrison.segments;
 
 import dk.itu.mario.level.Level;
+import dk.itu.mario.level.harrison.HarrisonLevel;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */
 public class CeilingJumpUp extends Segment

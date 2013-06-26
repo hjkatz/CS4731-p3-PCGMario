@@ -1,10 +1,12 @@
 
-package dk.itu.mario.level.harrison;
+package dk.itu.mario.level.harrison.transitions;
 
 import dk.itu.mario.level.Level;
+import dk.itu.mario.level.harrison.HarrisonLevel;
+import dk.itu.mario.level.harrison.segments.Segment;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */
-public class Transition extends Segment
+public class LongTransition extends Segment
 {
     
     @Override
