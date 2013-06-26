@@ -11,7 +11,7 @@ public class MyLevelGenerator extends CustomizedLevelGenerator implements LevelG
 
    public LevelInterface generateLevel(GamePlay playerMetrics){
       // LevelInterface level = new MyLevel(320, 15, new Random().nextLong(), 1, LevelInterface.TYPE_OVERGROUND, playerMetrics);
-      LevelInterface level = new HarrisonLevel(new Random().nextLong(), playerMetrics);
+      LevelInterface level = new HarrisonLevel(new Random().nextLong(), playerMetrics, -1);
       return level;
    }
 
