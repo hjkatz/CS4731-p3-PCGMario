@@ -165,7 +165,7 @@ public class HarrisonLevel extends RandomLevel{
 
             Segment best = types.get(random.nextInt(types.size()));
             for(Segment segment : types){
-               if(segment.getDifficulty() == level){
+               if(segment.getDifficulty() == level || segment.getDifficulty() == level + 1 || segment.getDifficulty() == level - 1){
                   best = segment;
                   break;
                }
@@ -224,6 +224,7 @@ public class HarrisonLevel extends RandomLevel{
       System.out.println("typeTransition  : " + typeTransition);
       System.out.println("typeEnemy       : " + typeEnemy);
       System.out.println("length          : " + length);
+      System.out.println("coinsgot          : " + playerMetrics.coinsCollected);
    }
 
    private void addSegment(Segment segment){
@@ -249,13 +250,14 @@ public class HarrisonLevel extends RandomLevel{
    }
 
    public void evaluate(GamePlay playerMetrics){
-      difficultyTime = playerMetrics.completionTime / 12 / 2; // 600 / 10 == 120, thus 12 puts the time to 1-10, divided by 2 to be added to the other component later
+      // difficultyTime = playerMetrics.completionTime / 12 / 2; // 600 / 10 == 120, thus 12 puts the time to 1-10, divided by 2 to be added to the other component later
 
-      difficultyTime += playerMetrics.coinsCollected / NUM_COINS * 10;
+      double a = (playerMetrics.coinsCollected / (double) NUM_COINS);
+      difficultyTime = (int) (a * 10);
 
       difficultyGaps = (int) (NUM_GAPS - playerMetrics.timesOfDeathByFallingIntoGap);
 
-      difficultyJump = (int) (NUM_JUMPS / (playerMetrics.jumpsNumber - playerMetrics.aimlessJumps) * 10);
+      difficultyJump = (int) ((NUM_JUMPS / (playerMetrics.jumpsNumber - playerMetrics.aimlessJumps)) * 10);
 
       difficultyEnemy = 5;
    }

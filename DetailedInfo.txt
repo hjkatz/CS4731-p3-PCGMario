@@ -1,0 +1,56 @@
+StartTime = -17
+CollectCoin:  time = 36
+CollectCoin:  time = 38
+CollectCoin:  time = 40
+CollectCoin:  time = 42
+CollectCoin:  time = 43
+CollectCoin:  time = 56
+CollectCoin:  time = 65
+RightMove: StTime = 27 EdTime = 39
+Jump:  StTime = 60 EdTime = 70
+CollectCoin:  time = 92
+CollectCoin:  time = 93
+CollectCoin:  time = 95
+CollectCoin:  time = 96
+CollectCoin:  time = 98
+RunState: StTime = 28 EdTime = 116
+LittleState: StTime = -17 EdTime = 122
+Totaltime = 139
+Die:  Gap 
+StartTime = -17
+CollectCoin:  time = 13
+CollectCoin:  time = 15
+CollectCoin:  time = 17
+CollectCoin:  time = 19
+CollectCoin:  time = 20
+CollectCoin:  time = 33
+CollectCoin:  time = 35
+CollectCoin:  time = 36
+CollectCoin:  time = 42
+Jump:  StTime = 35 EdTime = 45
+CollectCoin:  time = 60
+CollectCoin:  time = 61
+CollectCoin:  time = 63
+CollectCoin:  time = 64
+CollectCoin:  time = 65
+RunState: StTime = 4 EdTime = 82
+LittleState: StTime = -17 EdTime = 89
+Totaltime = 106
+Die:  Gap 
+StartTime = -17
+CollectCoin:  time = -1
+CollectCoin:  time = -1
+CollectCoin:  time = 12
+CollectCoin:  time = 14
+CollectCoin:  time = 15
+CollectCoin:  time = 21
+Jump:  StTime = 14 EdTime = 24
+CollectCoin:  time = 39
+CollectCoin:  time = 40
+CollectCoin:  time = 42
+CollectCoin:  time = 43
+CollectCoin:  time = 44
+RunState: StTime = -17 EdTime = 63
+LittleState: StTime = -17 EdTime = 68
+Totaltime = 85
+Die:  Gap 
