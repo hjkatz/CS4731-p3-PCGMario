@@ -71,6 +71,10 @@ public class HarrisonLevel extends RandomLevel
         Segment jumpLarge = new JumpLarge();
         Segment pillars = new Pillars();
         Segment pillarsGap = new PillarsGap();
+        Segment runnableGap = new RunnableGap();
+        Segment runnableGapLong = new RunnableGapLong();
+        Segment pipeSingle = new PipeSingle();
+        Segment pipeDouble = new PipeDouble();
         
         // create the start location
         int length = 0;
@@ -79,31 +83,35 @@ public class HarrisonLevel extends RandomLevel
         // create all of the medium sections
         while ( length < width - 20 )
         {
+            length += runnableGapLong.attach(length, this);
+            //length += pipeSingle.attach(length, this);
+            length += pipeDouble.attach(length, this);
             length += shortTransition.attach( length, this );
+            length += runnableGap.attach(length, this);
             length += ceilingJumpUp.attach( length, this );
             length += platformTransition.attach(length, this);
             length += wallJumpUp.attach( length, this );
-            length += singletonTransition.attach( length, this );
+            length += singletonTransition.attach(length, this);
             length += ceilingJumpUpDown.attach( length, this );
             length += mediumTransition.attach( length, this );
             length += platformTransition.attach( length, this );
             length += wallJumpUpDown.attach( length, this );
-            length += longTransition.attach( length, this );
-            length += gapSmall.attach( length, this );
-            length += longTransition.attach( length, this );
-            length += gapMedium.attach( length, this );
-            length += longTransition.attach( length, this );
-            length += gapLarge.attach( length, this );
-            length += longTransition.attach( length, this );
-            length += gapExtraLarge.attach( length, this );
-            length += longTransition.attach( length, this );
-            length += jumpMedium.attach( length, this );
-            length += longTransition.attach( length, this );
-            length += jumpLarge.attach( length, this );
-            length += longTransition.attach( length, this );
-            length += pillars.attach( length, this );
-            length += longTransition.attach( length, this );
-            length += pillarsGap.attach( length, this );
+            //length += longTransition.attach( length, this );
+            //length += gapSmall.attach( length, this );
+            //length += longTransition.attach( length, this );
+            //length += gapMedium.attach( length, this );
+            //length += longTransition.attach( length, this );
+            //length += gapLarge.attach( length, this );
+            //length += longTransition.attach( length, this );
+            //length += gapExtraLarge.attach( length, this );
+            //length += longTransition.attach( length, this );
+            //length += jumpMedium.attach( length, this );
+            //length += longTransition.attach( length, this );
+            //length += jumpLarge.attach( length, this );
+            //length += longTransition.attach( length, this );
+            //length += pillars.attach( length, this );
+            //length += longTransition.attach( length, this );
+            //length += pillarsGap.attach( length, this );
         }
         
         xExit = width - 8;

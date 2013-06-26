@@ -18,6 +18,7 @@ public class PlatformTransition extends Segment {
             level.setBlock(start + 2, y, HarrisonLevel.ROCK);
             level.setBlock(start + 8, y, HarrisonLevel.ROCK);
             level.setBlock(start + 9, y, HarrisonLevel.ROCK);
+            level.setBlock(start + 10, y, HarrisonLevel.ROCK);
         }
 
         level.setBlock(start + 3, level.getHeight() - 5, HarrisonLevel.BLOCK_EMPTY);
@@ -40,6 +41,6 @@ public class PlatformTransition extends Segment {
     @Override
     public int getLength()
     {
-        return 10;
+        return 11;
     }
 }
