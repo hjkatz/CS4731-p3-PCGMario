@@ -9,7 +9,7 @@ import dk.itu.mario.level.harrison.HarrisonLevel;
  * Created By: TJ Harrison
  * Date: 6/26/13
  */
-public class EnemyBumpUp extends Segment{
+public class EnemyBumpAcross extends Segment{
 
 
     @Override
@@ -17,6 +17,8 @@ public class EnemyBumpUp extends Segment{
         int y = level.getHeight() - 2;
         for(int i = level.getHeight(); i > y; i--){
             level.setBlock(start, i, HarrisonLevel.ROCK);
+            level.setBlock(start + 14, i, HarrisonLevel.ROCK);
+            level.setBlock(start + 15, i, HarrisonLevel.ROCK);
         }
 
         level.setBlock(start + 3, y - 1, HarrisonLevel.ROCK);
@@ -27,16 +29,15 @@ public class EnemyBumpUp extends Segment{
         level.setBlock(start + 8, y - 1, HarrisonLevel.ROCK);
         level.setBlock(start + 9, y - 1, HarrisonLevel.ROCK);
         level.setBlock(start + 10, y - 1, HarrisonLevel.ROCK);
-        level.setBlock(start + 11, y - 1, HarrisonLevel.ROCK);
 
-        level.setSpriteTemplate(start + 4, y - 2, new SpriteTemplate(Enemy.ENEMY_GOOMBA, false));
+        level.setSpriteTemplate(start + 4, y - 2, new SpriteTemplate(Enemy.ENEMY_RED_KOOPA, false));
         level.setSpriteTemplate(start + 7, y - 2, new SpriteTemplate(Enemy.ENEMY_GOOMBA, false));
         level.setSpriteTemplate(start + 9, y - 2, new SpriteTemplate(Enemy.ENEMY_GOOMBA, false));
 
         level.setBlock(start + 3, y - 2, HarrisonLevel.ROCK);
         level.setBlock(start + 6, y - 2, HarrisonLevel.ROCK);
         level.setBlock(start + 8, y - 2, HarrisonLevel.ROCK);
-        level.setBlock(start + 11, y - 2, HarrisonLevel.ROCK);
+        level.setBlock(start + 10, y - 2, HarrisonLevel.ROCK);
 
         level.setBlock(start + 6, y - 3, HarrisonLevel.COIN);
         level.setBlock(start + 8, y - 3, HarrisonLevel.COIN);
@@ -51,7 +52,7 @@ public class EnemyBumpUp extends Segment{
 
     @Override
     public int getLength() {
-        return 14;
+        return 16;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class EnemyBumpUp extends Segment{
 
     @Override
     public TYPE getType() {
-        return TYPE.ENEMY;
+        return TYPE.JUMP;
     }
 
     @Override

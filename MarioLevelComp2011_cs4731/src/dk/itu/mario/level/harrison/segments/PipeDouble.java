@@ -43,7 +43,7 @@ public class PipeDouble extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 5;
+      return 7;
    }
 
    @Override public int getLength(){

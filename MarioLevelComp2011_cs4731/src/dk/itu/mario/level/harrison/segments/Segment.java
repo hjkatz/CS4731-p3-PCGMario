@@ -24,6 +24,6 @@ public abstract class Segment{
    public abstract int getJumps();
 
    public enum TYPE{
-      JUMP, GAP, ENEMY, TRANSITION
+      JUMP, GAP, TRANSITION
    }
 }

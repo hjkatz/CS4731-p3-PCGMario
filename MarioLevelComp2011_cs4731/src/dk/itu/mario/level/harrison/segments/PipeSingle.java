@@ -28,7 +28,7 @@ public class PipeSingle extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 3;
+      return 5;
    }
 
    @Override public int getLength(){

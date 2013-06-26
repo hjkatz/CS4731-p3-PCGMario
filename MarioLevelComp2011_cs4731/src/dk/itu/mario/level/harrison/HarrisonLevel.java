@@ -12,42 +12,18 @@ import java.util.Random;
 /** Created By: Harrison Katz on Date: 6/21/13 */
 public class HarrisonLevel extends RandomLevel{
    public static final byte BLOCK_EMPTY         = (byte) (0 + 1 * 16);    // 1 * 16
-   public static final byte BLOCK_POWERUP       = (byte) (4 + 2 + 1 * 16); // 7 * 16
-   public static final byte BLOCK_COIN          = (byte) (4 + 1 + 1 * 16); // 6 * 16
-   public static final byte GROUND              = (byte) (1 + 9 * 16);    // 10 * 16
    public static final byte ROCK                = (byte) (9 + 0 * 16);    // 9 * 16
    public static final byte COIN                = (byte) (2 + 2 * 16);    // 4 * 16
-   public static final byte LEFT_GRASS_EDGE     = (byte) (0 + 9 * 16);    // 9 * 16
-   public static final byte RIGHT_GRASS_EDGE    = (byte) (2 + 9 * 16);    // 11 * 16
-   public static final byte RIGHT_UP_GRASS_EDGE = (byte) (2 + 8 * 16);    // 10 * 16
-   public static final byte LEFT_UP_GRASS_EDGE  = (byte) (0 + 8 * 16);    // 8 * 16
-   public static final byte LEFT_POCKET_GRASS   = (byte) (3 + 9 * 16);    // 12 * 16
-   public static final byte RIGHT_POCKET_GRASS  = (byte) (3 + 8 * 16);    // 11 * 16
-   public static final byte HILL_FILL           = (byte) (5 + 9 * 16);    // 14 * 16
-   public static final byte HILL_LEFT           = (byte) (4 + 9 * 16);    // 13 * 16
-   public static final byte HILL_RIGHT          = (byte) (6 + 9 * 16);    // 15 * 16
-   public static final byte HILL_TOP            = (byte) (5 + 8 * 16);    // 13 * 16
-   public static final byte HILL_TOP_LEFT       = (byte) (4 + 8 * 16);    // 12 * 16
-   public static final byte HILL_TOP_RIGHT      = (byte) (6 + 8 * 16);    // 14 * 16
-   public static final byte HILL_TOP_LEFT_IN    = (byte) (4 + 11 * 16);   // 15 * 16
-   public static final byte HILL_TOP_RIGHT_IN   = (byte) (6 + 11 * 16);   // 17 * 16
    public static final byte TUBE_TOP_LEFT       = (byte) (10 + 0 * 16);   // 10 * 16
    public static final byte TUBE_TOP_RIGHT      = (byte) (11 + 0 * 16);   // 11 * 16
    public static final byte TUBE_SIDE_LEFT      = (byte) (10 + 1 * 16);   // 11 * 16
    public static final byte TUBE_SIDE_RIGHT     = (byte) (11 + 1 * 16);   // 12 * 16
-   public static final int  LEVEL_WIDTH         = 400;
-   private final int        NUM_COINS           = 230;
-   private final int        NUM_JUMPS           = 21;
-   private final int        NUM_GAPS            = 10;
+   public static final int  LEVEL_WIDTH         = 100;
    private long             seed;
    private Random           random;
-   private GamePlay         playerMetrics;
-   // Player Metrics for Level Design
-   private int              difficultyJump;
-   private int              difficultyGaps;
-   private int              difficultyEnemy;
-   private int              difficultyTime;
-   private int              numjumps            = 0;
+   private GamePlay         metrics;
+   private int              difficulty;
+   private int              numJumps            = 0;
    private int              numCoins            = 0;
    private int              typeJump            = 0;
    private int              typeGap             = 0;
@@ -57,19 +33,11 @@ public class HarrisonLevel extends RandomLevel{
    //the enemies
    public static SpriteTemplate[][] spriteTemplates;
 
-   public HarrisonLevel(long seed, GamePlay playerMetrics, int difficulty){
+   public HarrisonLevel(long seed, GamePlay playerMetrics){
       super(HarrisonLevel.LEVEL_WIDTH, 15);
-      if(difficulty >= 1 && difficulty <= 10){
-         difficultyEnemy = difficulty;
-         difficultyTime = difficulty;
-         difficultyJump = difficulty;
-         difficultyGaps = difficulty;
-      }
-      else{
-         evaluate(playerMetrics);
-      }
       this.seed = seed;
-      this.playerMetrics = playerMetrics;
+      this.metrics = playerMetrics;
+
       width = HarrisonLevel.LEVEL_WIDTH;
       height = 15;
       spriteTemplates = new SpriteTemplate[width][height];
@@ -79,11 +47,23 @@ public class HarrisonLevel extends RandomLevel{
    public void create(){
       random = new Random(seed);
 
-      Segment singletonTransition = new SingletonTransition();
+      difficulty = 10 - (metrics.totalTime + (metrics.timeRunningRight / 4)) / (metrics.timeSpentRunning / 2);
+      int numDeaths = (int) (metrics.timesOfDeathByFallingIntoGap + metrics.timesOfDeathByGoomba + metrics.timesOfDeathByGreenTurtle + metrics.timesOfDeathByRedTurtle);
+      if(numDeaths == 0){
+          difficulty += 1;
+      }
+       else{
+          difficulty -= numDeaths;
+      }
+      difficulty = Math.max(difficulty, 1);
+      difficulty = Math.min(difficulty, 10);
+
+      //transitions
       Segment shortTransition = new ShortTransition();
       Segment mediumTransition = new MediumTransition();
       Segment longTransition = new LongTransition();
       Segment platformTransition = new PlatformTransition();
+      //segments
       Segment ceilingJumpUp = new CeilingJumpUp();
       Segment ceilingJumpUpDown = new CeilingJumpUpDown();
       Segment wallJumpUp = new WallJumpUp();
@@ -96,18 +76,19 @@ public class HarrisonLevel extends RandomLevel{
       Segment jumpLarge = new JumpLarge();
       Segment pillars = new Pillars();
       Segment pillarsGap = new PillarsGap();
+      Segment pillarsGapEasy = new PillarsGapEasy();
       Segment runnableGap = new RunnableGap();
       Segment runnableGapLong = new RunnableGapLong();
       Segment pipeSingle = new PipeSingle();
       Segment pipeDouble = new PipeDouble();
-      Segment enemyBumpUp = new EnemyBumpUp();
+      Segment enemyBumpAcross = new EnemyBumpAcross();
 
+      ArrayList<Segment> transitions = new ArrayList<Segment>();
       ArrayList<Segment> segments = new ArrayList<Segment>();
-      //segments.add(singletonTransition);
-      segments.add(shortTransition);
-      segments.add(mediumTransition);
-      segments.add(longTransition);
-      segments.add(platformTransition);
+      transitions.add(shortTransition);
+      transitions.add(mediumTransition);
+      transitions.add(longTransition);
+      transitions.add(platformTransition);
       segments.add(ceilingJumpUp);
       segments.add(ceilingJumpUpDown);
       segments.add(wallJumpUp);
@@ -120,29 +101,22 @@ public class HarrisonLevel extends RandomLevel{
       segments.add(jumpLarge);
       segments.add(pillars);
       segments.add(pillarsGap);
+      segments.add(pillarsGapEasy);
       segments.add(runnableGap);
       segments.add(runnableGapLong);
       segments.add(pipeSingle);
       segments.add(pipeDouble);
-      segments.add(enemyBumpUp);
+      segments.add(enemyBumpAcross);
 
       boolean transition = false;
 
       //create the start
       addSegment(longTransition);
-      addSegment(enemyBumpUp);
 
       // create all of the medium sections
       while(length < width - 20){
          if(transition){
-            ArrayList<Segment> transitions = new ArrayList<Segment>();
-            for(Segment segment : segments){
-               if(segment.getType() == Segment.TYPE.TRANSITION){
-                  transitions.add(segment);
-               }
-            }
-
-            int level = difficultyTime / 2 + random.nextInt(difficultyTime);
+            int level = difficulty / 2 + random.nextInt(difficulty);
             Segment best = transitions.get(random.nextInt(transitions.size()));
             for(Segment segment : transitions){
                if(segment.getDifficulty() == level){
@@ -154,93 +128,44 @@ public class HarrisonLevel extends RandomLevel{
             transition = false;
          }
          else{
-            Segment.TYPE which = Segment.TYPE.JUMP;
-            if(typeGap < typeJump){
-               which = Segment.TYPE.GAP;
-            }
+            Segment best = segments.get(random.nextInt(segments.size()));
+            ArrayList<Segment> possibilities = new ArrayList<Segment>();
 
-            ArrayList<Segment> types = new ArrayList<Segment>();
-            for(Segment segment : segments){
-               if(segment.getType() == which){
-                  types.add(segment);
+               for(Segment segment : segments){
+                   if(segment.getDifficulty() == difficulty || segment.getDifficulty() == difficulty + 1 || segment.getDifficulty() == difficulty + 2 || segment.getDifficulty() == difficulty - 2 || segment.getDifficulty() == difficulty - 1){
+                       possibilities.add(segment);
+                   }
                }
-            }
 
-            int level = 5;
-            if(which == Segment.TYPE.JUMP){
-               level = Math.min(difficultyTime, difficultyJump / 2 + random.nextInt(difficultyJump));
-            }
-            if(which == Segment.TYPE.GAP){
-               level = Math.min(difficultyTime, difficultyGaps / 2 + random.nextInt(difficultyGaps));
-            }
-
-            Segment best = types.get(random.nextInt(types.size()));
-            for(Segment segment : types){
-               if(segment.getDifficulty() == level || segment.getDifficulty() == level + 1 || segment.getDifficulty() == level - 1){
-                  best = segment;
-                  break;
-               }
-            }
+            best = possibilities.get(random.nextInt(possibilities.size()));
             addSegment(best);
             transition = true;
          }
-
-         // length += longTransition.attach(length, this);
-         // length += runnableGapLong.attach(length, this);
-         // length += pipeSingle.attach(length, this);
-         // length += pipeDouble.attach(length, this);
-         // length += shortTransition.attach(length, this);
-         // length += runnableGap.attach(length, this);
-         // length += ceilingJumpUp.attach(length, this);
-         // length += platformTransition.attach(length, this);
-         // length += wallJumpUp.attach(length, this);
-         // length += singletonTransition.attach(length, this);
-         // length += ceilingJumpUpDown.attach(length, this);
-         // length += mediumTransition.attach(length, this);
-         // length += platformTransition.attach(length, this);
-         // length += wallJumpUpDown.attach(length, this);
-         // length += longTransition.attach(length, this);
-         // length += gapSmall.attach(length, this);
-         // length += longTransition.attach(length, this);
-         // length += gapMedium.attach(length, this);
-         // length += longTransition.attach(length, this);
-         // length += gapLarge.attach(length, this);
-         // length += longTransition.attach(length, this);
-         // length += gapExtraLarge.attach(length, this);
-         // length += longTransition.attach(length, this);
-         // length += jumpMedium.attach(length, this);
-         // length += longTransition.attach(length, this);
-         // length += jumpLarge.attach(length, this);
-         // length += longTransition.attach(length, this);
-         // length += pillars.attach(length, this);
-         // length += longTransition.attach(length, this);
-         // length += pillarsGap.attach(length, this);
       }
 
       xExit = width - 8;
       yExit = height - 1;
-      //create exit?
+      //create exit, use this instead of long transition so there are no coins past exit
       while(length < width){
-         length += longTransition.attach(length, this);
+         setBlock(length, getHeight(), HarrisonLevel.ROCK);
+         setBlock(length, getHeight() - 1, HarrisonLevel.ROCK);
+         length += 1;
       }
 
-      System.out.println("difficultyJump  : " + difficultyJump);
-      System.out.println("difficultyGaps  : " + difficultyGaps);
-      System.out.println("difficultyEnemy : " + difficultyEnemy);
-      System.out.println("difficultyTime  : " + difficultyTime);
-      System.out.println("numjumps        : " + numjumps);
+      System.out.println("difficulty  : " + difficulty);
+      System.out.println("numJumps        : " + numJumps);
       System.out.println("numCoins        : " + numCoins);
       System.out.println("typeJump        : " + typeJump);
       System.out.println("typeGap         : " + typeGap);
       System.out.println("typeTransition  : " + typeTransition);
       System.out.println("typeEnemy       : " + typeEnemy);
       System.out.println("length          : " + length);
-      System.out.println("coinsgot          : " + playerMetrics.coinsCollected);
+      System.out.println("coinsgot          : " + metrics.coinsCollected);
    }
 
    private void addSegment(Segment segment){
       length += segment.attach(length, this);
-      numjumps += segment.getJumps();
+      numJumps += segment.getJumps();
       numCoins += segment.getCoins();
       switch (segment.getType()){
          case TRANSITION:
@@ -248,9 +173,6 @@ public class HarrisonLevel extends RandomLevel{
             break;
          case JUMP:
             typeJump += 1;
-            break;
-         case ENEMY:
-            typeEnemy += 1;
             break;
          case GAP:
             typeGap += 1;
@@ -260,16 +182,14 @@ public class HarrisonLevel extends RandomLevel{
       }
    }
 
-   public void evaluate(GamePlay playerMetrics){
+   //public void evaluate(GamePlay playerMetrics){
       // difficultyTime = playerMetrics.completionTime / 12 / 2; // 600 / 10 == 120, thus 12 puts the time to 1-10, divided by 2 to be added to the other component later
 
-      double a = (playerMetrics.coinsCollected / (double) NUM_COINS);
-      difficultyTime = (int) (a * 10);
+      //double a = (playerMetrics.coinsCollected / (double) NUM_COINS);
+      //difficultyTime = (int) (a * 10);
 
-      difficultyGaps = (int) (NUM_GAPS - playerMetrics.timesOfDeathByFallingIntoGap);
+      //difficultyGaps = (int) (NUM_GAPS - playerMetrics.timesOfDeathByFallingIntoGap);
 
-      difficultyJump = (int) ((NUM_JUMPS / (playerMetrics.jumpsNumber - playerMetrics.aimlessJumps)) * 10);
-
-      difficultyEnemy = 5;
-   }
+      //difficultyJump = (int) ((NUM_JUMPS / (playerMetrics.jumpsNumber - playerMetrics.aimlessJumps)) * 10);
+   //}
 }
