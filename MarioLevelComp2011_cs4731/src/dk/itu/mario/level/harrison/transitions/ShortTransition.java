@@ -14,11 +14,11 @@ public class ShortTransition extends Segment {
     {
         for ( int y = level.getHeight(); y > level.getHeight() - 2; y-- )
         {
-            level.setBlock(start, y, HarrisonLevel.GROUND);
-            level.setBlock(start + 1, y, HarrisonLevel.GROUND);
-            level.setBlock(start + 2, y, HarrisonLevel.GROUND);
-            level.setBlock(start + 3, y, HarrisonLevel.GROUND);
-            level.setBlock(start + 4, y, HarrisonLevel.GROUND);
+            level.setBlock(start,     y, HarrisonLevel.ROCK);
+            level.setBlock(start + 1, y, HarrisonLevel.ROCK);
+            level.setBlock(start + 2, y, HarrisonLevel.ROCK);
+            level.setBlock(start + 3, y, HarrisonLevel.ROCK);
+            level.setBlock(start + 4, y, HarrisonLevel.ROCK);
         }
 
         level.setBlock(start + 2, level.getHeight() - 2, HarrisonLevel.COIN );

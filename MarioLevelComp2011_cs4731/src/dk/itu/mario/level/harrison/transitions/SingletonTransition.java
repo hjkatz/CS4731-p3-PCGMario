@@ -15,7 +15,7 @@ public class SingletonTransition extends Segment {
     {
         for ( int y = level.getHeight(); y > level.getHeight() - 2; y--)
         {
-            level.setBlock(start, y, HarrisonLevel.GROUND);
+            level.setBlock(start, y, HarrisonLevel.ROCK);
         }
 
         level.setBlock(start, level.getHeight() - 2, HarrisonLevel.COIN);

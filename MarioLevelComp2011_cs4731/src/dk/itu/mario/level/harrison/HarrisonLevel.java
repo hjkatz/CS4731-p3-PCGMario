@@ -81,10 +81,11 @@ public class HarrisonLevel extends RandomLevel
         {
             length += shortTransition.attach( length, this );
             length += ceilingJumpUp.attach( length, this );
-            length += mediumTransition.attach( length, this );
-            length += ceilingJumpUpDown.attach( length, this );
-            length += singletonTransition.attach( length, this );
+            length += platformTransition.attach(length, this);
             length += wallJumpUp.attach( length, this );
+            length += singletonTransition.attach( length, this );
+            length += ceilingJumpUpDown.attach( length, this );
+            length += mediumTransition.attach( length, this );
             length += platformTransition.attach( length, this );
             length += wallJumpUpDown.attach( length, this );
             length += longTransition.attach( length, this );
