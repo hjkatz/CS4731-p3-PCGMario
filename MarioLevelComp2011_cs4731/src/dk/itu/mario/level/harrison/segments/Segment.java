@@ -16,14 +16,4 @@ public abstract class Segment{
    }
 
    public abstract int getLength();
-
-   public abstract int getCoins();
-
-   public abstract TYPE getType();
-
-   public abstract int getJumps();
-
-   public enum TYPE{
-      JUMP, GAP, TRANSITION
-   }
 }

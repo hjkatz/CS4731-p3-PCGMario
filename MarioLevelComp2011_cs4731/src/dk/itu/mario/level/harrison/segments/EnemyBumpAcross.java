@@ -54,19 +54,4 @@ public class EnemyBumpAcross extends Segment{
     public int getLength() {
         return 16;
     }
-
-    @Override
-    public int getCoins() {
-        return 2;
-    }
-
-    @Override
-    public TYPE getType() {
-        return TYPE.JUMP;
-    }
-
-    @Override
-    public int getJumps() {
-        return 1;
-    }
 }

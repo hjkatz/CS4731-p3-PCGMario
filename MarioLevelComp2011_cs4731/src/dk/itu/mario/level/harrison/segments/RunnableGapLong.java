@@ -37,16 +37,4 @@ public class RunnableGapLong extends Segment{
    @Override public int getLength(){
       return 15;
    }
-
-   @Override public int getCoins(){
-      return 3;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.GAP;
-   }
-
-   @Override public int getJumps(){
-      return 0;
-   }
 }

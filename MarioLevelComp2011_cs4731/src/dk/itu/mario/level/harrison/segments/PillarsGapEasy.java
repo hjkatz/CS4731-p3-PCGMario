@@ -50,16 +50,4 @@ public class PillarsGapEasy extends Segment {
     @Override public int getLength(){
         return 17;
     }
-
-    @Override public int getCoins(){
-        return 6;
-    }
-
-    @Override public Segment.TYPE getType(){
-        return Segment.TYPE.GAP;
-    }
-
-    @Override public int getJumps(){
-        return 2;
-    }
 }

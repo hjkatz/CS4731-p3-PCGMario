@@ -44,16 +44,4 @@ public class PillarsGap extends Segment{
    @Override public int getLength(){
       return 17;
    }
-
-   @Override public int getCoins(){
-      return 6;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.GAP;
-   }
-
-   @Override public int getJumps(){
-      return 2;
-   }
 }

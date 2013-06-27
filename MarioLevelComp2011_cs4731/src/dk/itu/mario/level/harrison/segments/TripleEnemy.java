@@ -44,19 +44,4 @@ public class TripleEnemy extends Segment {
     public int getLength() {
         return 7;
     }
-
-    @Override
-    public int getCoins() {
-        return 0;
-    }
-
-    @Override
-    public TYPE getType() {
-        return TYPE.JUMP;
-    }
-
-    @Override
-    public int getJumps() {
-        return 1;
-    }
 }

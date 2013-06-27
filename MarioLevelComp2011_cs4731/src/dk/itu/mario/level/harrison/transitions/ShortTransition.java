@@ -29,16 +29,4 @@ public class ShortTransition extends Segment{
    @Override public int getLength(){
       return 5;
    }
-
-   @Override public int getCoins(){
-      return 1;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.TRANSITION;
-   }
-
-   @Override public int getJumps(){
-      return 0;
-   }
 }

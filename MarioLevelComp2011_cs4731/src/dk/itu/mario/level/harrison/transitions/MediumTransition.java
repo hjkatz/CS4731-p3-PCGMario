@@ -35,16 +35,4 @@ public class MediumTransition extends Segment{
    @Override public int getLength(){
       return 10;
    }
-
-   @Override public int getCoins(){
-      return 2;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.TRANSITION;
-   }
-
-   @Override public int getJumps(){
-      return 0;
-   }
 }

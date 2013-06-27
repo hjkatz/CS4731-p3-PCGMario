@@ -28,16 +28,4 @@ public class LongTransition extends Segment{
    @Override public int getLength(){
       return 15;
    }
-
-   @Override public int getCoins(){
-      return 5;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.TRANSITION;
-   }
-
-   @Override public int getJumps(){
-      return 0;
-   }
 }

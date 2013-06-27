@@ -26,16 +26,4 @@ public class GapSmall extends Segment{
    @Override public int getLength(){
       return 15;
    }
-
-   @Override public int getCoins(){
-      return 3;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.GAP; // To change body of implemented methods use File | Settings | File Templates.
-   }
-
-   @Override public int getJumps(){
-      return 1;
-   }
 }

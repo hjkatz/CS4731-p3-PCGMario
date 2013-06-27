@@ -34,16 +34,4 @@ public class PipeSingle extends Segment{
    @Override public int getLength(){
       return 4;
    }
-
-   @Override public int getCoins(){
-      return 2;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.JUMP;
-   }
-
-   @Override public int getJumps(){
-      return 1;
-   }
 }

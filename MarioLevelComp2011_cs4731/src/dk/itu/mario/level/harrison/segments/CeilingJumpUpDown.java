@@ -44,16 +44,4 @@ public class CeilingJumpUpDown extends Segment{
    @Override public int getLength(){
       return 15;
    }
-
-   @Override public int getCoins(){
-      return 4;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.JUMP;
-   }
-
-   @Override public int getJumps(){
-      return 1;
-   }
 }

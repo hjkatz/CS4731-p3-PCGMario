@@ -54,16 +54,4 @@ public class Pillars extends Segment{
    @Override public int getLength(){
       return 17;
    }
-
-   @Override public int getCoins(){
-      return 6;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.JUMP;
-   }
-
-   @Override public int getJumps(){
-      return 2; // To change body of implemented methods use File | Settings | File Templates.
-   }
 }

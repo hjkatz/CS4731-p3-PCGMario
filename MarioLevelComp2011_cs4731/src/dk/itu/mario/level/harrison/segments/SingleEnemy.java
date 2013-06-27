@@ -37,19 +37,4 @@ public class SingleEnemy extends Segment {
     public int getLength() {
         return 3;
     }
-
-    @Override
-    public int getCoins() {
-        return 0;
-    }
-
-    @Override
-    public TYPE getType() {
-        return TYPE.JUMP;
-    }
-
-    @Override
-    public int getJumps() {
-        return 1;
-    }
 }
