@@ -6,7 +6,9 @@ call segments, that give the levels variety. When constructing the level the alg
 a transition and a segment. Each segment is given a difficulty rating by the designer, which the level generator uses
 to decide which pieces are applicable for the player's skill level (on the past level). The player's overall skill level
 is determined mostly be the amount of times they died before completing the last level. This difficulty is then adjusted
-by the the recorded player metrics on total time and time running. The difficulty ranges from 1 to 10.
+by the the recorded player metrics on total time and time running. The difficulty ranges from 1 to 10 for the player,
+and 0 - 12 for the segments. The larger range for the segment's difficulties gives pieces that show up only on the
+easiest and hardest difficulties.
 
 difficulty = 10 - (totalTime + (timeRunningRight / 4)) / (timeSpentRunning / 2)
 if(timesDied == 0) difficulty += 1
@@ -16,13 +18,14 @@ difficulty = min(difficulty, 10)
 
 When the level generator is selecting a segment it looks though all the ones within a difficulty range of +-2 from the
 determined level difficulty. This gives players pieces that match their skill level while still allowing for easier
-and harder parts within the level.
+and harder parts within the level and a greater variety.
 
 Offline Training:
 Were any CI/AI techniques used for offline training? If so, which?
-No learning algorithms were used. However it is based on a semi-random seed. We could easily record a lot of seeds
-and then change it to only use them when creating the levels. It would lose some of it's power since no more 'new'
-levels would be created, but it would guarantee better quality of the levels it does generate.
+No learning algorithms were used. However the level produced is based on a semi-random seed and the player's difficulty
+rating. We could easily record a lot of seeds for each possible difficulty and then change it to only use them when
+creating the levels. It would lose some of it's power since no more 'new' levels would be created, but it would
+guarantee better quality of the levels it does generate.
 
 Creative Control:
 Does the level generator adapt to the recorded playing style of the human player? If so, how?
@@ -59,7 +62,16 @@ use level generators or wish to have some randomness included in their levels. T
 were not completely sure if it could or could not be used for other content, but it is a definite possibility since
 similar methods in the Mario Competition and they claimed to able to use their generators for other types of content.
 
-Comparison to the Mario Competition competitors:
+Challenges:
+We faced a major dilemma on segment design, as both of us disagreed on how exactly a speed-run style level should be
+played. In the end we were able to compromise on the segments we disagreed upon. I think ultimately it helped with the
+turn out of the overall level designs, as we both have different play/design styles that when combined created better
+segments and a larger variety of them.
+
+
+
+
+Comparison to the Mario PCG Competition competitors:
 Our level generator was most similar to Peter Mawhorter's Occupancy-Regulated Extension (ORE) generator. ORE used
 hand authored pieces called chunks to fit together and build random levels. Our approach was very similar in that
 respect, but we did not use anchor points as ORE did to keep track of where the character could be or not be. Instead
