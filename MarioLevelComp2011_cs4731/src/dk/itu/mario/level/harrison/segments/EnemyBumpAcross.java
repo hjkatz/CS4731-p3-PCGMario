@@ -16,9 +16,10 @@ public class EnemyBumpAcross extends Segment{
     public int attach(int start, Level level) {
         int y = level.getHeight() - 2;
         for(int i = level.getHeight(); i > y; i--){
-            level.setBlock(start, i, HarrisonLevel.ROCK);
-            level.setBlock(start + 14, i, HarrisonLevel.ROCK);
-            level.setBlock(start + 15, i, HarrisonLevel.ROCK);
+           level.setBlock(start, i, HarrisonLevel.ROCK);
+           level.setBlock(start + 13, i, HarrisonLevel.ROCK);
+           level.setBlock(start + 14, i, HarrisonLevel.ROCK);
+           level.setBlock(start + 15, i, HarrisonLevel.ROCK);
         }
 
         level.setBlock(start + 3, y - 1, HarrisonLevel.ROCK);

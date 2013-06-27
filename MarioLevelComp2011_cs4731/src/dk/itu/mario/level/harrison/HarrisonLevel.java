@@ -84,6 +84,9 @@ public class HarrisonLevel extends RandomLevel{
       Segment singleEnemy = new SingleEnemy();
       Segment doubleEnemy = new DoubleEnemy();
       Segment tripleEnemy = new TripleEnemy();
+      Segment fiverEnemy = new FiverEnemy();
+      Segment spacedTripleEnemy = new SpacedTripleEnemy();
+      Segment spacedFiverEnemy = new SpacedFiverEnemy();
 
       ArrayList<Segment> transitions = new ArrayList<Segment>();
       transitions.add(shortTransition);
@@ -113,6 +116,9 @@ public class HarrisonLevel extends RandomLevel{
       segments.add(singleEnemy);
       segments.add(doubleEnemy);
       segments.add(tripleEnemy);
+      segments.add(fiverEnemy);
+      segments.add(spacedTripleEnemy);
+      segments.add(spacedFiverEnemy);
 
       boolean transition = false;
 

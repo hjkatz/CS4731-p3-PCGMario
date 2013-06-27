@@ -27,15 +27,4 @@ public class SingletonTransition extends Segment{
       return 1;
    }
 
-   @Override public int getCoins(){
-      return 1;
-   }
-
-   @Override public TYPE getType(){
-      return TYPE.TRANSITION;
-   }
-
-   @Override public int getJumps(){
-      return 0;
-   }
 }
