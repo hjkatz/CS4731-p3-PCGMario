@@ -1,6 +1,7 @@
 package dk.itu.mario.level.harrison;
 
 import dk.itu.mario.MarioInterface.GamePlay;
+import dk.itu.mario.engine.sprites.Enemy;
 import dk.itu.mario.engine.sprites.SpriteTemplate;
 import dk.itu.mario.level.RandomLevel;
 import dk.itu.mario.level.harrison.segments.*;
@@ -18,9 +19,10 @@ public class HarrisonLevel extends RandomLevel{
    public static final byte TUBE_TOP_RIGHT      = (byte) (11 + 0 * 16);   // 11 * 16
    public static final byte TUBE_SIDE_LEFT      = (byte) (10 + 1 * 16);   // 11 * 16
    public static final byte TUBE_SIDE_RIGHT     = (byte) (11 + 1 * 16);   // 12 * 16
+    public static ArrayList<Integer> enemyTypes = new ArrayList<Integer>();
    public static final int  LEVEL_WIDTH         = 100;
    private long             seed;
-   private Random           random;
+   public static Random     random;
    private GamePlay         metrics;
    private int              difficulty;
    private int              numJumps            = 0;
@@ -41,11 +43,14 @@ public class HarrisonLevel extends RandomLevel{
       width = HarrisonLevel.LEVEL_WIDTH;
       height = 15;
       spriteTemplates = new SpriteTemplate[width][height];
+      HarrisonLevel.enemyTypes.add(Enemy.ENEMY_GREEN_KOOPA);
+      HarrisonLevel.enemyTypes.add(Enemy.ENEMY_GOOMBA);
+      HarrisonLevel.enemyTypes.add(Enemy.ENEMY_RED_KOOPA);
       create();
    }
 
    public void create(){
-      random = new Random(seed);
+       HarrisonLevel.random = new Random(seed);
 
       difficulty = 10 - (metrics.totalTime + (metrics.timeRunningRight / 4)) / (metrics.timeSpentRunning / 2);
       int numDeaths = (int) (metrics.timesOfDeathByFallingIntoGap + metrics.timesOfDeathByGoomba + metrics.timesOfDeathByGreenTurtle + metrics.timesOfDeathByRedTurtle);
@@ -82,6 +87,9 @@ public class HarrisonLevel extends RandomLevel{
       Segment pipeSingle = new PipeSingle();
       Segment pipeDouble = new PipeDouble();
       Segment enemyBumpAcross = new EnemyBumpAcross();
+       Segment singleEnemy = new SingleEnemy();
+       Segment doubleEnemy = new DoubleEnemy();
+       Segment tripleEnemy = new TripleEnemy();
 
       ArrayList<Segment> transitions = new ArrayList<Segment>();
       ArrayList<Segment> segments = new ArrayList<Segment>();
@@ -107,6 +115,9 @@ public class HarrisonLevel extends RandomLevel{
       segments.add(pipeSingle);
       segments.add(pipeDouble);
       segments.add(enemyBumpAcross);
+      segments.add(singleEnemy);
+      segments.add(doubleEnemy);
+      segments.add(tripleEnemy);
 
       boolean transition = false;
 
@@ -116,8 +127,8 @@ public class HarrisonLevel extends RandomLevel{
       // create all of the medium sections
       while(length < width - 20){
          if(transition){
-            int level = difficulty / 2 + random.nextInt(difficulty);
-            Segment best = transitions.get(random.nextInt(transitions.size()));
+            int level = difficulty / 2 + HarrisonLevel.random.nextInt(difficulty);
+            Segment best = transitions.get(HarrisonLevel.random.nextInt(transitions.size()));
             for(Segment segment : transitions){
                if(segment.getDifficulty() == level){
                   best = segment;
@@ -137,7 +148,7 @@ public class HarrisonLevel extends RandomLevel{
                    }
                }
 
-            best = possibilities.get(random.nextInt(possibilities.size()));
+            best = possibilities.get(HarrisonLevel.random.nextInt(possibilities.size()));
             addSegment(best);
             transition = true;
          }
