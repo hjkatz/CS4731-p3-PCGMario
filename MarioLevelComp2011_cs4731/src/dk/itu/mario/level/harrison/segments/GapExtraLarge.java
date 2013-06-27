@@ -25,7 +25,7 @@ public class GapExtraLarge extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 5;
+      return 8;
    }
 
    @Override public int getLength(){

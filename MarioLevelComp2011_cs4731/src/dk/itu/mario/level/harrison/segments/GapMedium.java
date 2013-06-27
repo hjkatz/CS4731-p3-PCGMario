@@ -20,7 +20,7 @@ public class GapMedium extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 2;
+      return 3;
    }
 
    @Override public int getLength(){

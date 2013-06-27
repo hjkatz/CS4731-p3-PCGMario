@@ -38,7 +38,7 @@ public class CeilingJumpUpDown extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 7;
+      return 6;
    }
 
    @Override public int getLength(){

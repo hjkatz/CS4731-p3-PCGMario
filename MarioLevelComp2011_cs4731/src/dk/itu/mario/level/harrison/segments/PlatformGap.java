@@ -1,13 +1,12 @@
-package dk.itu.mario.level.harrison.transitions;
+package dk.itu.mario.level.harrison.segments;
 
 import dk.itu.mario.level.Level;
 import dk.itu.mario.level.harrison.HarrisonLevel;
-import dk.itu.mario.level.harrison.segments.Segment;
 
 /**
  * Created By: TJ Harrison Date: 6/25/13
  */
-public class PlatformTransition extends Segment{
+public class PlatformGap extends Segment{
    @Override public int attach(int start, Level level){
       for(int y = level.getHeight(); y > level.getHeight() - 2; y--){
          level.setBlock(start, y, HarrisonLevel.ROCK);
@@ -33,7 +32,7 @@ public class PlatformTransition extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 1;
+      return 7;
    }
 
    @Override public int getLength(){

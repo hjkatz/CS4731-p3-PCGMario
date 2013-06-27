@@ -4,13 +4,11 @@ import dk.itu.mario.level.Level;
 import dk.itu.mario.level.harrison.HarrisonLevel;
 
 /**
- * Created By: TJ Harrison
- * Date: 6/26/13
+ * Created By: TJ Harrison Date: 6/26/13
  */
 public class CannonPyramid extends Segment{
 
-   @Override
-   public int attach(int start, Level level) {
+   @Override public int attach(int start, Level level){
       int y = level.getHeight() - 2;
       for(int i = level.getHeight(); i > y; i--){
          level.setBlock(start, i, HarrisonLevel.ROCK);
@@ -28,7 +26,7 @@ public class CannonPyramid extends Segment{
       level.setBlock(start + 2, y - 1, HarrisonLevel.CANNON);
       level.setBlock(start + 3, y, HarrisonLevel.ROCK);
       level.setBlock(start + 3, y - 1, HarrisonLevel.ROCK);
-      level.setBlock(start + 3, y - 1, HarrisonLevel.CANNON);
+      level.setBlock(start + 3, y - 2, HarrisonLevel.CANNON);
       level.setBlock(start + 4, y, HarrisonLevel.ROCK);
       level.setBlock(start + 4, y - 1, HarrisonLevel.ROCK);
       level.setBlock(start + 4, y - 2, HarrisonLevel.ROCK);
@@ -43,13 +41,11 @@ public class CannonPyramid extends Segment{
       return getLength();
    }
 
-   @Override
-   public int getDifficulty() {
-      return 9;
+   @Override public int getDifficulty(){
+      return 7;
    }
 
-   @Override
-   public int getLength() {
+   @Override public int getLength(){
       return 9;
    }
 }

@@ -5,29 +5,31 @@ import dk.itu.mario.engine.sprites.Enemy;
 import dk.itu.mario.engine.sprites.SpriteTemplate;
 import dk.itu.mario.level.RandomLevel;
 import dk.itu.mario.level.harrison.segments.*;
-import dk.itu.mario.level.harrison.transitions.*;
+import dk.itu.mario.level.harrison.transitions.LongTransition;
+import dk.itu.mario.level.harrison.transitions.MediumTransition;
+import dk.itu.mario.level.harrison.transitions.ShortTransition;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */
 public class HarrisonLevel extends RandomLevel{
-   public static final byte BLOCK_EMPTY         = (byte) (0 + 1 * 16);
-   public static final byte ROCK                = (byte) (9 + 0 * 16);
-   public static final byte COIN                = (byte) (2 + 2 * 16);
-   public static final byte TUBE_TOP_LEFT       = (byte) (10 + 0 * 16);
-   public static final byte TUBE_TOP_RIGHT      = (byte) (11 + 0 * 16);
-   public static final byte TUBE_SIDE_LEFT      = (byte) (10 + 1 * 16);
-   public static final byte TUBE_SIDE_RIGHT     = (byte) (11 + 1 * 16);
-   public static final byte CANNON              = (byte) (14 + 0 * 16);
-   public static ArrayList<Integer> enemyTypes = new ArrayList<Integer>();
-   public static final int  LEVEL_WIDTH         = 400;
-   private long             seed;
-   public static Random     random;
-   private GamePlay         metrics;
-   private int              difficulty;
-   private int              length              = 0;
-   //the enemies
+   public static final byte         BLOCK_EMPTY     = (byte) (0 + 1 * 16);
+   public static final byte         ROCK            = (byte) (9 + 0 * 16);
+   public static final byte         COIN            = (byte) (2 + 2 * 16);
+   public static final byte         TUBE_TOP_LEFT   = (byte) (10 + 0 * 16);
+   public static final byte         TUBE_TOP_RIGHT  = (byte) (11 + 0 * 16);
+   public static final byte         TUBE_SIDE_LEFT  = (byte) (10 + 1 * 16);
+   public static final byte         TUBE_SIDE_RIGHT = (byte) (11 + 1 * 16);
+   public static final byte         CANNON          = (byte) (14 + 0 * 16);
+   public static ArrayList<Integer> enemyTypes      = new ArrayList<Integer>();
+   public static final int          LEVEL_WIDTH     = 400;
+   private long                     seed;
+   public static Random             random;
+   private GamePlay                 metrics;
+   private int                      difficulty;
+   private int                      length          = 0;
+   // the enemies
    public static SpriteTemplate[][] spriteTemplates;
 
    public HarrisonLevel(long seed, GamePlay playerMetrics, int difficulty){
@@ -62,12 +64,11 @@ public class HarrisonLevel extends RandomLevel{
          difficulty = Math.min(difficulty, 10);
       }
 
-      //transitions
+      // transitions
       Segment shortTransition = new ShortTransition();
       Segment mediumTransition = new MediumTransition();
       Segment longTransition = new LongTransition();
-      Segment platformTransition = new PlatformTransition();
-      //segments
+      // segments
       Segment ceilingJumpUp = new CeilingJumpUp();
       Segment ceilingJumpUpDown = new CeilingJumpUpDown();
       Segment wallJumpUp = new WallJumpUp();
@@ -76,6 +77,7 @@ public class HarrisonLevel extends RandomLevel{
       Segment gapMedium = new GapMedium();
       Segment gapLarge = new GapLarge();
       Segment gapExtraLarge = new GapExtraLarge();
+      Segment platformGap = new PlatformGap();
       Segment jumpMedium = new JumpMedium();
       Segment jumpLarge = new JumpLarge();
       Segment pillars = new Pillars();
@@ -102,7 +104,6 @@ public class HarrisonLevel extends RandomLevel{
       transitions.add(shortTransition);
       transitions.add(mediumTransition);
       transitions.add(longTransition);
-      transitions.add(platformTransition);
 
       ArrayList<Segment> segments = new ArrayList<Segment>();
       segments.add(ceilingJumpUp);
@@ -113,6 +114,7 @@ public class HarrisonLevel extends RandomLevel{
       segments.add(gapMedium);
       segments.add(gapLarge);
       segments.add(gapExtraLarge);
+      segments.add(platformGap);
       segments.add(jumpMedium);
       segments.add(jumpLarge);
       segments.add(pillars);
@@ -137,12 +139,13 @@ public class HarrisonLevel extends RandomLevel{
 
       boolean transition = false;
 
-      //create the start
+      // create the start
       addSegment(longTransition);
 
       // create all of the medium sections
       while(length < width - 20){
          if(transition){
+            // choose transition based on difficulty?
             addSegment(transitions.get(HarrisonLevel.random.nextInt(transitions.size())));
             transition = false;
          }
@@ -150,11 +153,11 @@ public class HarrisonLevel extends RandomLevel{
             Segment best = segments.get(random.nextInt(segments.size()));
             ArrayList<Segment> possibilities = new ArrayList<Segment>();
 
-               for(Segment segment : segments){
-                   if(segment.getDifficulty() == difficulty || segment.getDifficulty() == difficulty + 1 || segment.getDifficulty() == difficulty + 2 || segment.getDifficulty() == difficulty - 2 || segment.getDifficulty() == difficulty - 1){
-                       possibilities.add(segment);
-                   }
+            for(Segment segment : segments){
+               if(segment.getDifficulty() == difficulty || segment.getDifficulty() == difficulty + 1 || segment.getDifficulty() == difficulty + 2 || segment.getDifficulty() == difficulty - 2 || segment.getDifficulty() == difficulty - 1){
+                  possibilities.add(segment);
                }
+            }
 
             best = possibilities.get(HarrisonLevel.random.nextInt(possibilities.size()));
             addSegment(best);
@@ -164,7 +167,7 @@ public class HarrisonLevel extends RandomLevel{
 
       xExit = width - 8;
       yExit = height - 1;
-      //create exit, use this instead of long transition so there are no coins past exit
+      // create exit, use this instead of long transition so there are no coins past exit
       while(length < width){
          setBlock(length, getHeight(), HarrisonLevel.ROCK);
          setBlock(length, getHeight() - 1, HarrisonLevel.ROCK);
