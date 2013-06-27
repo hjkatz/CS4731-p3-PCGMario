@@ -12,15 +12,16 @@ import java.util.Random;
 
 /** Created By: Harrison Katz on Date: 6/21/13 */
 public class HarrisonLevel extends RandomLevel{
-   public static final byte BLOCK_EMPTY         = (byte) (0 + 1 * 16);    // 1 * 16
-   public static final byte ROCK                = (byte) (9 + 0 * 16);    // 9 * 16
-   public static final byte COIN                = (byte) (2 + 2 * 16);    // 4 * 16
-   public static final byte TUBE_TOP_LEFT       = (byte) (10 + 0 * 16);   // 10 * 16
-   public static final byte TUBE_TOP_RIGHT      = (byte) (11 + 0 * 16);   // 11 * 16
-   public static final byte TUBE_SIDE_LEFT      = (byte) (10 + 1 * 16);   // 11 * 16
-   public static final byte TUBE_SIDE_RIGHT     = (byte) (11 + 1 * 16);   // 12 * 16
+   public static final byte BLOCK_EMPTY         = (byte) (0 + 1 * 16);
+   public static final byte ROCK                = (byte) (9 + 0 * 16);
+   public static final byte COIN                = (byte) (2 + 2 * 16);
+   public static final byte TUBE_TOP_LEFT       = (byte) (10 + 0 * 16);
+   public static final byte TUBE_TOP_RIGHT      = (byte) (11 + 0 * 16);
+   public static final byte TUBE_SIDE_LEFT      = (byte) (10 + 1 * 16);
+   public static final byte TUBE_SIDE_RIGHT     = (byte) (11 + 1 * 16);
+   public static final byte CANNON              = (byte) (14 + 0 * 16);
    public static ArrayList<Integer> enemyTypes = new ArrayList<Integer>();
-   public static final int  LEVEL_WIDTH         = 100;
+   public static final int  LEVEL_WIDTH         = 400;
    private long             seed;
    public static Random     random;
    private GamePlay         metrics;
@@ -29,10 +30,11 @@ public class HarrisonLevel extends RandomLevel{
    //the enemies
    public static SpriteTemplate[][] spriteTemplates;
 
-   public HarrisonLevel(long seed, GamePlay playerMetrics){
+   public HarrisonLevel(long seed, GamePlay playerMetrics, int difficulty){
       super(HarrisonLevel.LEVEL_WIDTH, 15);
       this.seed = seed;
       this.metrics = playerMetrics;
+      this.difficulty = difficulty;
 
       width = HarrisonLevel.LEVEL_WIDTH;
       height = 15;
@@ -44,18 +46,20 @@ public class HarrisonLevel extends RandomLevel{
    }
 
    public void create(){
-       HarrisonLevel.random = new Random(seed);
+      HarrisonLevel.random = new Random(seed);
 
-      difficulty = 10 - (metrics.totalTime + (metrics.timeRunningRight / 4)) / (metrics.timeSpentRunning / 2);
-      int numDeaths = (int) (metrics.timesOfDeathByFallingIntoGap + metrics.timesOfDeathByGoomba + metrics.timesOfDeathByGreenTurtle + metrics.timesOfDeathByRedTurtle);
-      if(numDeaths == 0){
-          difficulty += 1;
+      if(difficulty == -1){
+         difficulty = 10 - (metrics.totalTime + (metrics.timeRunningRight / 4)) / (metrics.timeSpentRunning / 2);
+         int numDeaths = (int) (metrics.timesOfDeathByFallingIntoGap + metrics.timesOfDeathByGoomba + metrics.timesOfDeathByGreenTurtle + metrics.timesOfDeathByRedTurtle + metrics.timesOfDeathByCannonBall);
+         if(numDeaths == 0){
+            difficulty += 1;
+         }
+         else{
+            difficulty -= numDeaths;
+         }
+         difficulty = Math.max(difficulty, 1);
+         difficulty = Math.min(difficulty, 10);
       }
-       else{
-          difficulty -= numDeaths;
-      }
-      difficulty = Math.max(difficulty, 1);
-      difficulty = Math.min(difficulty, 10);
 
       //transitions
       Segment shortTransition = new ShortTransition();
@@ -87,6 +91,11 @@ public class HarrisonLevel extends RandomLevel{
       Segment fiverEnemy = new FiverEnemy();
       Segment spacedTripleEnemy = new SpacedTripleEnemy();
       Segment spacedFiverEnemy = new SpacedFiverEnemy();
+      Segment cannonFort = new CannonFort();
+      Segment cannonHill = new CannonHill();
+      Segment cannonHump = new CannonHump();
+      Segment tripleCannonHump = new TripleCannonHump();
+      Segment cannonPyramid = new CannonPyramid();
 
       ArrayList<Segment> transitions = new ArrayList<Segment>();
       transitions.add(shortTransition);
@@ -119,6 +128,11 @@ public class HarrisonLevel extends RandomLevel{
       segments.add(fiverEnemy);
       segments.add(spacedTripleEnemy);
       segments.add(spacedFiverEnemy);
+      segments.add(cannonFort);
+      segments.add(cannonHill);
+      segments.add(cannonHump);
+      segments.add(tripleCannonHump);
+      segments.add(cannonPyramid);
 
       boolean transition = false;
 
@@ -156,7 +170,8 @@ public class HarrisonLevel extends RandomLevel{
          length += 1;
       }
 
-      System.out.println("difficulty     : " + difficulty);
+      System.out.println("difficulty : " + difficulty);
+      System.out.println("seed       : " + seed);
    }
 
    private void addSegment(Segment segment){
