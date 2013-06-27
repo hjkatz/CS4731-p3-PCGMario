@@ -48,7 +48,7 @@ public class Pillars extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 10;
+      return 9;
    }
 
    @Override public int getLength(){

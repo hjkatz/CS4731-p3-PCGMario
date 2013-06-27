@@ -20,7 +20,7 @@ public class GapLarge extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 7;
+      return 5;
    }
 
    @Override public int getLength(){

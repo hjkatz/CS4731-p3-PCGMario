@@ -22,7 +22,7 @@ public class RunnableGap extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 3;
+      return 4;
    }
 
    @Override public int getLength(){

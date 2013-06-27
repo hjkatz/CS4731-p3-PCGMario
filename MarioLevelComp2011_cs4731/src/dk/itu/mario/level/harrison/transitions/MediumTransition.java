@@ -29,7 +29,7 @@ public class MediumTransition extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 1;
+      return 2;
    }
 
    @Override public int getLength(){

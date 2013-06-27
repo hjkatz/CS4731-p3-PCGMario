@@ -24,7 +24,7 @@ public class SingletonTransition extends Segment{
    }
 
    @Override public int getLength(){
-      return 1;
+      return 6;
    }
 
 }

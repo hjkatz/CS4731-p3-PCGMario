@@ -23,7 +23,7 @@ public class ShortTransition extends Segment{
    }
 
    @Override public int getDifficulty(){
-      return 1;
+      return 3;
    }
 
    @Override public int getLength(){
