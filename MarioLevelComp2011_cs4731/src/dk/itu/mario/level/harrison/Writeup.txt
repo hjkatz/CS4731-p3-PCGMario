@@ -1,3 +1,9 @@
+Team Harrison:
+Harrison Katz & TJ Harrison
+
+How to Run:
+
+
 Idea and Architecture:
 What is the main idea behind, and general architecture of, the level generator?
 Our level generator pieces together pre-made segments designed by humans to create speed-run style levels. We have two
@@ -18,7 +24,8 @@ difficulty = min(difficulty, 10)
 
 When the level generator is selecting a segment it looks though all the ones within a difficulty range of +-2 from the
 determined level difficulty. This gives players pieces that match their skill level while still allowing for easier
-and harder parts within the level and a greater variety.
+and harder parts within the level and a greater variety. Overall we think the level generator turned out pretty well, it
+designs levels of various difficulties all with a speed-run style to them, which is exactly what we wanted.
 
 Offline Training:
 Were any CI/AI techniques used for offline training? If so, which?
@@ -66,12 +73,13 @@ Challenges:
 We faced a major dilemma on segment design, as both of us disagreed on how exactly a speed-run style level should be
 played. In the end we were able to compromise on the segments we disagreed upon. I think ultimately it helped with the
 turn out of the overall level designs, as we both have different play/design styles that when combined created better
-segments and a larger variety of them.
+segments and a larger variety of them. The player metrics recorded by the game were also a disappointment. They were not
+as detailed as we had hoped and didn't allow us to do our original design of using the coins as an indicator of
+whether or not the player is taking the perfect path. This forced us to use the different metrics on speed instead.
+There was also no easy way to record your own metrics, which for a codebase designed for level generation seems a bit
+unreasonable, but maybe that's just us.
 
-
-
-
-Comparison to the Mario PCG Competition competitors:
+Comparison to the Mario PCG Competition Competitors:
 Our level generator was most similar to Peter Mawhorter's Occupancy-Regulated Extension (ORE) generator. ORE used
 hand authored pieces called chunks to fit together and build random levels. Our approach was very similar in that
 respect, but we did not use anchor points as ORE did to keep track of where the character could be or not be. Instead
