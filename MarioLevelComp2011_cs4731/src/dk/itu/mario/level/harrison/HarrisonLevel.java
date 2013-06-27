@@ -48,6 +48,7 @@ public class HarrisonLevel extends RandomLevel{
    public void create(){
       HarrisonLevel.random = new Random(seed);
 
+      //determine difficulty
       if(difficulty == -1){
          difficulty = 10 - (metrics.totalTime + (metrics.timeRunningRight / 4)) / (metrics.timeSpentRunning / 2);
          int numDeaths = (int) (metrics.timesOfDeathByFallingIntoGap + metrics.timesOfDeathByGoomba + metrics.timesOfDeathByGreenTurtle + metrics.timesOfDeathByRedTurtle + metrics.timesOfDeathByCannonBall);

@@ -1,0 +1,69 @@
+Idea and Architecture:
+What is the main idea behind, and general architecture of, the level generator?
+Our level generator pieces together pre-made segments designed by humans to create speed-run style levels. We have two
+general types of segments: transitions, of which there are only a few of, and the backbone segments, which we will just
+call segments, that give the levels variety. When constructing the level the algorithm switches off between laying down
+a transition and a segment. Each segment is given a difficulty rating by the designer, which the level generator uses
+to decide which pieces are applicable for the player's skill level (on the past level). The player's overall skill level
+is determined mostly be the amount of times they died before completing the last level. This difficulty is then adjusted
+by the the recorded player metrics on total time and time running. The difficulty ranges from 1 to 10.
+
+difficulty = 10 - (totalTime + (timeRunningRight / 4)) / (timeSpentRunning / 2)
+if(timesDied == 0) difficulty += 1
+else difficulty -= timesDied
+difficulty = max(difficulty, 1)
+difficulty = min(difficulty, 10)
+
+When the level generator is selecting a segment it looks though all the ones within a difficulty range of +-2 from the
+determined level difficulty. This gives players pieces that match their skill level while still allowing for easier
+and harder parts within the level.
+
+Offline Training:
+Were any CI/AI techniques used for offline training? If so, which?
+No learning algorithms were used. However it is based on a semi-random seed. We could easily record a lot of seeds
+and then change it to only use them when creating the levels. It would lose some of it's power since no more 'new'
+levels would be created, but it would guarantee better quality of the levels it does generate.
+
+Creative Control:
+Does the level generator adapt to the recorded playing style of the human player? If so, how?
+Yes, it adjusts the difficulty of the level based on how well the player did last time. Since the focus of our level
+generation were speed-run style levels, this difficulty is calculated based on the total time, the amount of time
+running and the number of times the player died. This gives it a nice flow, if you do bad you will get an easier level
+to recuperate on, which since it's easier will most likely score you a higher difficulty level. If you continue to do
+good while playing hard levels, they will stay that way until you lose your edge and mess up too many times. The
+number of lives lost affects the difficulty more so than the speed. Though this seems counter-intuitive for a speed-run
+level generator it greatly helps in scaling the difficulty for the players skill level, while the player's speed
+fine tunes the difficulty.
+
+Adaptation:
+How much of the generated levels are actually designed by a human designer? Conversely, what level of creative
+control would a human designer have when using the generator?
+The segments are randomly selected to create the levels, so the human designer does not have much control over how they
+actually turn out. The designer does however have complete control over creating the different segments and transitions
+that are pieced together, greatly influencing the design of the levels. There are some limitations though, since the
+levels are meant to be speed-run levels the designer must keep in mind that each segment to transition passage and
+vice-versa must allow the player to keep a pretty solid pace. Though this is a small pain for designers it is easily
+overcome by adding a flat runway to the beginning or end of tricky segments.
+
+Strengths and Weaknesses:
+What are the main strengths and weaknesses of the level generator?
+Our generator is able to create a good variety of levels that allow the player to keep running through them. It can
+also be easily expanded by adding in more segments. If enough segments were added the player would stop recognizing
+each one as often and greatly enhance the variety of levels created.
+
+Generalizability:
+Could the underlying principles be generalized to work for other games, or other types of content?
+Our method could be used in other 2D side-scroller games that focus on speed-run levels. While it by itself may not
+be able to create enough level varieties to build an entire game it is a good addition to any 2D side-scrollers that
+use level generators or wish to have some randomness included in their levels. This is our first excursion into PCG so
+were not completely sure if it could or could not be used for other content, but it is a definite possibility since
+similar methods in the Mario Competition and they claimed to able to use their generators for other types of content.
+
+Comparison to the Mario Competition competitors:
+Our level generator was most similar to Peter Mawhorter's Occupancy-Regulated Extension (ORE) generator. ORE used
+hand authored pieces called chunks to fit together and build random levels. Our approach was very similar in that
+respect, but we did not use anchor points as ORE did to keep track of where the character could be or not be. Instead
+we rely on the segment designer to create pieces that fit together well. We also had some similarities with Robin
+Baumgarten's LDA-based level generator, though not quite as advanced as his approach. While we rely on the designer
+for good pieces to use, we rely on gathered player metrics to in each level to determine the next level's difficulty
+before building it.
