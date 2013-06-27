@@ -2,7 +2,14 @@ Team Harrison:
 Harrison Katz & TJ Harrison
 
 How to Run:
-
+A makefile is included in the MarioPCG directory. Use 'make' from the MarioPCG directory to run the game.
+If you dont have make installed then the command, from the MarioPCG directory, is
+'java -cp out/production/MarioLevelComp2011_cs4731 dk.itu.mario.engine.PlayCustomized'
+In MyLevelGenerator there are lines commented out with different difficulties set instead of relying on player metrics.
+This is also where you can enter different seeds and difficulties to try out specific levels. Two you might want to try
+are:
+difficulty: 5, seed: 1042915961841111885
+difficulty: 4, seed: -853868602428886525
 
 Idea and Architecture:
 What is the main idea behind, and general architecture of, the level generator?
